@@ -1,0 +1,66 @@
+{
+  "name": "xiaodai-testing-expert-lite",
+  "version": "1.0.0",
+  "description": "A lightweight testing expert for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages and mandatory time-savings tracking.",
+  "author": {
+    "name": "Quality Management Team",
+    "email": "qa@kingdee.com"
+  },
+  "agents": [
+    "./agents/xiaodai-testing-expert-lite.md"
+  ],
+  "skills": [
+    "./skills/xiaodai-lite-orchestrator",
+    "./skills/ai-testcase-workflow-skill",
+    "./skills/time-tracking-skill"
+  ],
+  "expertType": "agent",
+  "agentName": "xiaodai-testing-expert-lite",
+  "displayName": {
+    "en": "Xiaodai Testing Expert Lite",
+    "zh": "效贷测试专家轻量版"
+  },
+  "profession": {
+    "en": "Lightweight Functional Testing Expert",
+    "zh": "轻量功能测试专家"
+  },
+  "displayDescription": {
+    "en": "[v1.0.0] Seven on-demand testing stages with XMind, Excel cases, identity verification, and time-savings tracking.",
+    "zh": "【v1.0.0】轻量七环节按需编排，覆盖需求整理、测试点、用例生成及节省工时追踪"
+  },
+  "avatar": "avatars/expert.png",
+  "categoryId": "10-ProjectQuality",
+  "defaultInitPrompt": {
+    "zh": "开始轻量版测试流程",
+    "en": "Start the lightweight testing workflow"
+  },
+  "plugin": "xiaodai-testing-expert-lite",
+  "tags": [
+    {
+      "en": "Functional Testing",
+      "zh": "功能测试"
+    },
+    {
+      "en": "Test Case Workflow",
+      "zh": "用例工作流"
+    },
+    {
+      "en": "Time Savings",
+      "zh": "工时追踪"
+    }
+  ],
+  "quickPrompts": [
+    {
+      "en": "Start the lightweight testing workflow",
+      "zh": "开始轻量版测试流程"
+    },
+    {
+      "en": "Generate test points and an XMind file from this confirmed requirement",
+      "zh": "根据已确认需求生成测试点和 XMind"
+    },
+    {
+      "en": "Generate Excel test cases from the reviewed test points",
+      "zh": "根据已评审测试点生成 Excel 用例"
+    }
+  ]
+}

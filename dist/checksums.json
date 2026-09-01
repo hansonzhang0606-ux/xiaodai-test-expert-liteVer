@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "artifacts": [
+    {
+      "file": "xiaodai-test-expert-liteVer-v1.0.0-source.zip",
+      "size": 1534168,
+      "sha256": "a2637e3e52f0029c353b4a742a7bf8fb0620c267aeffe81b512c514a271a4122"
+    },
+    {
+      "file": "xiaodai-testing-expert-lite-v1.0.0-workbuddy.zip",
+      "size": 501465,
+      "sha256": "4c6f7e60ddc47b508cf4a1534c17e1a6c450a3eb575bde194e4e87715f47b7b3"
+    }
+  ]
+}

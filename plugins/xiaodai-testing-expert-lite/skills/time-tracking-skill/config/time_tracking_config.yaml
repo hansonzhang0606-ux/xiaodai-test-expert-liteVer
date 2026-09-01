@@ -1,0 +1,126 @@
+# 时间节省追踪配置（通用多业务线版）
+# 控制时间追踪的存储模式、参考时间、MySQL 同步
+#
+# ★★★ 部署必改：default_biz_line ★★★
+# 每个团队部署本 skill 后，将 default_biz_line 设置为自己的业务线名称。
+# 支持的业务线：效贷 / 泾渭云 / 效融 / 小贷 / 智慧记+运营系统 / AI进销存 / 智慧记零售
+# 编码对照：XD / JWY / XR / XXD / ZHJ / AIJXC / ZHJLS（见 scripts/biz_line_helper.py）
+# ⚠️ 智慧记是三个子业务线的统称（ZHJ 智慧记+运营系统 / AIJXC AI进销存 / ZHJLS 智慧记零售），
+#    部署时必须填具体子业务线全称（如 "智慧记+运营系统"），不可填统称"智慧记"，
+#    否则业务线编码无法正确映射、数据会落错目录。
+# AI 调用脚本时也可通过 --biz-line 参数临时覆盖。
+
+default_biz_line: ""
+
+# ============================================================
+# 存储模式
+# ============================================================
+# mysql: 本地 JSONL 兜底 + 定时任务同步共享 MySQL（推荐，团队汇总用）
+# local: 仅本地 JSONL（无集中存储，开箱即用）
+# excel: 本地 JSONL + Excel 文件（管理员分发或共享目录，可选附加）
+storage_mode: "mysql"
+
+# ============================================================
+# 本地存储路径（relative to ~/.workbuddy/data/，{biz_line} 为业务线子目录）
+# ============================================================
+local_storage:
+  dir: "time-tracking/{biz_line}"
+  records_file: "records.jsonl"
+  report_file: "time_analytics_{biz_line}.html"
+  csv_file: "time_analytics_{biz_line}.csv"
+
+# ============================================================
+# MySQL 共享数据库（storage_mode=mysql 时生效）
+# ============================================================
+# 每台电脑首次使用前，测试人员运行一次初始化脚本生成本机配置：
+#   python scripts/init_mysql_config.py --biz-line <业务线>
+# 生成的文件：~/.workbuddy/data/time-tracking/{biz_line}/mysql_config.json
+#   ⚠️ 该文件含数据库密码，是本机私有配置，不随 Skill 分发，不要提交 Git/发群。
+#
+# 同步方式：Windows 定时任务（每日 09:00/12:00/18:00 运行 scripts/sync_task.bat），
+#   或手动运行 python scripts/sync_to_mysql.py --biz-line <业务线>（幂等，可重复执行）。
+#   表结构：agent_time_tracking（唯一键 record_key，重复同步不产生重复数据）。
+mysql:
+  # 初始化脚本的默认连接信息（不含密码！密码由管理员单独告知，运行时交互输入）
+  # 部署时可改为本团队的数据库信息，测试人员运行初始化脚本时直接回车即可
+  default_host: "127.0.0.1"
+  default_port: 3306
+  default_user: "root"
+  default_database: "your_database"
+  default_table: "agent_time_tracking"
+
+# ============================================================
+# Excel 集中存储配置（storage_mode=excel 时生效，可选附加）
+# ============================================================
+# 首次使用：python scripts/sync_to_excel.py --init --excel <文件路径>
+# file_path 留空表示未启用；启用后将 Excel 完整路径回填到下方。
+excel:
+  file_path: ""
+  sheet_name: "时间追踪表"
+
+# ============================================================
+# 参考时间表（每步完成后展示给员工参考）
+# 员工可采纳参考值，也可自行反馈实际节省时间
+# ============================================================
+reference_times:
+  - step_code: "01"
+    step_name: "文档整理"
+    min_hours: 2.0
+    max_hours: 4.0
+    unit: "小时"
+    basis: "按文档数量浮动，5个以上文档取上限"
+
+  - step_code: "02"
+    step_name: "需求评审"
+    min_hours: 2.0
+    max_hours: 3.0
+    unit: "小时"
+    basis: "6维度评审（完整性/一致性/边界/异常/优先级/可测性）"
+
+  - step_code: "04"
+    step_name: "生成测试点"
+    min_hours: 3.0
+    max_hours: 5.0
+    unit: "小时"
+    basis: "按需求复杂度浮动，涉及多系统交互取上限"
+
+  - step_code: "06"
+    step_name: "用例细化"
+    min_hours: 4.0
+    max_hours: 8.0
+    unit: "小时"
+    basis: "按用例数量浮动，100条以上取上限，可用人天"
+
+  - step_code: "07"
+    step_name: "知识入库"
+    min_hours: 1.0
+    max_hours: 2.0
+    unit: "小时"
+    basis: "总结+差异对比+精华提炼+归档"
+
+# ============================================================
+# 强制规则
+# ============================================================
+rules:
+  mandatory: true                     # 每步必须反馈，不可跳过
+  allow_skip: false                   # 不允许跳过
+  require_confirmation: true          # v3: 保存前必须二次确认
+  adopt_reference_value: "midpoint"   # v5.9: 回复“采纳”时取参考范围中间值
+  no_feedback_after_retries: "midpoint" # v5.9: 两次追问仍无实际值时取中间值
+  no_feedback_remark: "用户未反馈，采用参考中间值"
+  max_feedback_retries: 2
+  unit_options:                       # 员工可用的反馈单位
+    - "小时"
+    - "人天"
+  person_day_to_hours: 8.0           # 1人天 = 8小时
+  storage_unit: "hours"              # v3: 底层存储统一为小时
+  display_unit: "person_days"        # v3: 报告展示以人天为主
+
+# ============================================================
+# 会话缓存
+# ============================================================
+session_cache:
+  cache_fields:                       # 首次填写后缓存，后续步骤无需重复
+    - employee
+    - user_story
+  cache_duration: "session"           # 会话级缓存

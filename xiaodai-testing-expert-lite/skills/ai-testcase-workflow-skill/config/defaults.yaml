@@ -1,0 +1,113 @@
+# Testcase Generator Skill - 默认配置
+# 
+# 使用方法：
+# 1. 复制此文件为 project.yaml
+# 2. 根据项目修改配置值
+# 3. 脚本会优先读取 project.yaml，不存在则使用此默认配置
+
+# ===== 项目基本信息 =====
+project:
+  name: ""                   # 项目名称（如：效贷、自动化平台等）
+
+# ===== 测试平台默认值 =====
+# 这些值会填充到测试用例 Excel 的对应列
+defaults:
+  team: ""                   # ⭐ 必填：项目组名称（如：金蝶效贷）
+  product: ""                # ⭐ 必填：产品名称（如：金蝶效贷）
+  modulePath: ""             # ⭐ 必填：模块路径（如：金蝶效贷-金蝶效贷）
+  caseLevel: "P1"            # 默认用例级别（P0/P1/P2/P3）
+  source: "需求文档"          # 默认来源（需求文档/产品用例/补丁用例）
+  autoState: "否"            # 默认自动化状态
+  separator: ""              # 分隔符（默认为空）
+
+# ===== DMP测试用例 Excel 模板 =====
+test_platform:
+  template_type: "dmp_testcase"  # Excel 模板类型
+  
+  # Excel 前4行固定内容
+  excel_header:
+    row1: "用例管理 # dmp_testcase"
+    row2: "1、请将鼠标移到灰色标题行查看字段录入要求\r\n2、红色带星号（*）的字段为必录字段\r\n#SetNULL（启用单元格输入NULL清空字段）"
+  
+  # 列定义（标准格式）
+  columns:
+    - name: "team"
+      label: "*项目组"
+      required: true
+    - name: "caseGroup"
+      label: "*功能路径（用例分组），层级之间用\"-间隔\""
+      required: true
+    - name: "name"
+      label: "*功能点（用例名称）"
+      required: true
+    - name: "preCondition"
+      label: "功能说明（前置条件）"
+      required: false
+    - name: "input"
+      label: "步骤描述，多步骤换行分隔"
+      required: false
+    - name: "output"
+      label: "预期结果，多结果换行分隔"
+      required: false
+    - name: "product"
+      label: "*产品"
+      required: true
+    - name: "modulePath"
+      label: "*模块路径，层级之间用\"-间隔\""
+      required: true
+    - name: "version"
+      label: "适用版本（产品版本）"
+      required: false
+    - name: "caseType"
+      label: "*用例类型"
+      required: true
+    - name: "source"
+      label: "来源"
+      required: false
+    - name: "caseLevel"
+      label: "用例级别"
+      required: false
+    - name: "manager"
+      label: "*责任人，重名的请输入工号"
+      required: true
+    - name: "autoState"
+      label: "已实现自动化"
+      required: false
+    - name: "relateReqCode"
+      label: "关联用户故事（填写编码），多个用户故事请在单元格内换行输入"
+      required: false
+    - name: "workload"
+      label: "工作量（分钟）"
+      required: false
+    - name: "remarks"
+      label: "备注"
+      required: false
+    - name: "separator"
+      label: "分隔符"
+      required: false
+
+# ===== 知识库配置 =====
+knowledge_base:
+  # 相对路径（相对于项目根目录）
+  # AI 会根据当前工作目录自动定位
+  relative_path: ".skill/knowledge-base"
+  
+  # 注：如需使用绝对路径，请在 project.yaml 中配置
+  # absolute_path: ""
+
+# ===== 文件命名规则 =====
+naming:
+  # 知识库入库命名格式
+  archive_format: "{req_code}_{req_name}_{date}"
+  
+  # 无需求编号时的命名格式
+  archive_format_no_code: "{req_name}_{date}"
+  
+  # 测试点文件命名
+  testpoint_format: "{name}_测试点.xmind"
+
+  # 评审后文件命名（用户直接在原文件上评审，无需重命名）
+  reviewed_format: "{name}_测试点.xmind（用户直接在此文件上评审）"
+  
+  # 测试用例文件命名
+  testcase_format: "{name}_测试用例.xlsx"

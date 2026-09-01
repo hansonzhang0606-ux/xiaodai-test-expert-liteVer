@@ -1,0 +1,37 @@
+# 项目配置文件
+#
+# 此文件位于项目根目录的 .skill/ 目录下
+# 用于配置项目专属的测试用例默认值和知识库路径
+
+# ===== 项目基本信息 =====
+project:
+  name: ""                   # 项目名称
+
+# ===== 测试平台默认值 =====
+# ⭐ 必填项：这些值会填充到测试用例 Excel 的对应列
+defaults:
+  team: ""                   # ⭐ 项目组名称
+  product: ""                # ⭐ 产品名称
+  modulePath: ""             # ⭐ 模块路径
+
+  # 可选项（以下有默认值）
+  caseLevel: "P1"            # 默认用例级别
+  source: "需求文档"          # 默认来源
+  autoState: "否"            # 默认自动化状态
+  separator: ""              # 分隔符（默认为空）
+
+# ===== 知识库配置 =====
+knowledge_base:
+  # 知识库位于项目目录下的 .skill/knowledge-base
+  relative_path: ".skill/knowledge-base"
+
+  # 如需使用共享知识库（多个项目共用），可配置绝对路径
+  # absolute_path: "D:\共享知识库"
+
+# ===== 文件命名规则 =====
+naming:
+  archive_format: "{req_code}_{req_name}_{date}"
+  archive_format_no_code: "{req_name}_{date}"
+  testpoint_format: "{name}_测试点.xmind"
+  reviewed_format: "{name}_测试点.xmind（用户直接在此文件上评审）"
+  testcase_format: "{name}_测试用例.xlsx"

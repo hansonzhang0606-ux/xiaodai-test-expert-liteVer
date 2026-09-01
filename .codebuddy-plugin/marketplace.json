@@ -1,0 +1,11 @@
+{
+  "name": "xiaodai-test-expert-lite-marketplace",
+  "description": "效贷测试专家轻量版私有市场，提供三业务线七环节按需测试流程和节省工时追踪。",
+  "plugins": [
+    {
+      "name": "xiaodai-testing-expert-lite",
+      "source": "./plugins/xiaodai-testing-expert-lite",
+      "description": "Lightweight seven-stage testing expert for Xiaodai, Xiaorong, and Microloan business lines."
+    }
+  ]
+}

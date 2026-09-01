@@ -1,0 +1,18 @@
+# 测试人员花名册（多业务线）
+#
+# ⚠️ 重要变更（2026-08-26）：花名册现由管理员**直接在 MySQL 的 agent_team_roster 表维护**，
+# 运行时身份识别 / 业务线确认一律实时查该表（见 scripts/load_roster.py、record_time_saved.py），
+# 不再经本文件同步。故本文件的 members 留空，不再承载人员名单。
+#
+# 业务线编码对照：
+#   XD     - 效贷
+#   JWY    - 泾渭云
+#   XR     - 效融
+#   XXD    - 小贷
+#   ZHJ    - 智慧记+运营系统
+#   AIJXC  - AI进销存
+#   ZHJLS  - 智慧记零售
+
+members: []
+# 人员名单已迁移至 MySQL agent_team_roster 表，由管理员直接维护（增删 / 启停均 UPDATE 该表）。
+# 本文件仅保留业务线编码对照表作为查阅参考；sync_roster_to_mysql.py 的旧「yaml→MySQL」通道已弃用。

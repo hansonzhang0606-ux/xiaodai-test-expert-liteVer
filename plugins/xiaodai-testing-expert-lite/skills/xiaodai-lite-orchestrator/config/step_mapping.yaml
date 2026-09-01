@@ -1,0 +1,58 @@
+version: "1.0.0"
+
+business_lines:
+  - code: "XD"
+    name: "效贷"
+  - code: "XR"
+    name: "效融"
+  - code: "XXD"
+    name: "小贷"
+
+stages:
+  - id: 1
+    name: "需求文档整理"
+    optional: false
+    business_prompt: "../ai-testcase-workflow-skill/prompts/document_consolidate.md"
+    tracking_code: "01"
+    tracking_name: "文档整理"
+    required_output: "需求整理稿"
+  - id: 2
+    name: "需求评审"
+    optional: true
+    business_prompt: "../ai-testcase-workflow-skill/prompts/requirement_review.md"
+    tracking_code: "02"
+    tracking_name: "需求评审"
+    required_output: "需求评审报告"
+  - id: 3
+    name: "确认评审"
+    optional: true
+    orchestrator_prompt: "../xiaodai-lite-orchestrator/prompts/workflow_routing.md"
+    tracking_code: null
+    required_output: "已回写确认项的需求整理稿"
+  - id: 4
+    name: "生成测试点并最终生成 XMind"
+    optional: false
+    business_prompt: "../ai-testcase-workflow-skill/prompts/testpoint_generate.md"
+    tracking_code: "04"
+    tracking_name: "生成测试点"
+    required_output: "测试点 JSON 和 XMind"
+  - id: 5
+    name: "评审 XMind 测试点"
+    optional: true
+    orchestrator_prompt: "../xiaodai-lite-orchestrator/prompts/workflow_routing.md"
+    tracking_code: null
+    required_output: "按确认意见更新的测试点 JSON 和 XMind"
+  - id: 6
+    name: "生成 Excel 测试用例"
+    optional: false
+    business_prompt: "../ai-testcase-workflow-skill/prompts/testcase_refine.md"
+    tracking_code: "06"
+    tracking_name: "生成用例"
+    required_output: "详细用例 JSON 和 Excel"
+  - id: 7
+    name: "知识库入库"
+    optional: true
+    business_prompt: "../ai-testcase-workflow-skill/prompts/knowledge_base_archive.md"
+    tracking_code: "07"
+    tracking_name: "入库知识库"
+    required_output: "按业务线隔离的知识库记录"

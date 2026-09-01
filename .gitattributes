@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.bat -text
+*.png binary
+*.zip binary
+*.xlsx binary
+*.xls binary
+*.xmind binary

@@ -1,0 +1,4 @@
+interface:
+  display_name: "效贷测试专家轻量版"
+  short_description: "覆盖需求整理、测试点、XMind、Excel用例及工时追踪的轻量测试流程"
+  default_prompt: "使用 $xiaodai-testing-expert-lite 开始轻量版测试流程。"
