@@ -1,26 +1,28 @@
 # 效贷效融测试专家【Lite版】 — 测试人员使用指导手册（精简版）
 
-> **基于 v1.0.0 精简** | **适用对象**：效贷（XD）/ 效融（XR）/ 小贷（XXD）业务线功能测试人员 | **更新日期**：2026-09-01
+> **基于 v1.0.0 精简** | **适用对象**：效贷（XD）/ 效融（XR）/ 小贷（XXD）业务线功能测试人员 | **更新日期**：2026-09-02（安装方式改为 install.ps1 一键安装）
 > 本精简版**只保留「首次使用操作步骤」+ 工作流 + 时间追踪 + 常见问题（QA）+ 三端使用说明**。完整背景、七环节规则、时间追踪细则见仓库内各 Skill 的 `SKILL.md` 与 `prompts/`。
 
 ---
 
 ## 一、首次使用操作步骤
 
-### 第 1 步：添加团队市场（仅首次）
+### 第 1 步：一键安装（推荐，必做）
 
-1. 左侧栏 **「专家·技能·链接」** → 切换到 **「技能」→「套件」**（或「专家」市场页）
-2. 右上角 **「+」** → 填写市场源：`hansonzhang0606-ux/xiaodai-test-expert-liteVer`
-3. 提交（不需要带 `https://` 前缀）
+1. 打开 `https://github.com/hansonzhang0606-ux/xiaodai-test-expert-liteVer`
+2. 点击 **Code → Download ZIP**，下载并解压到本地任意目录（如 `D:\xiaodai-test-expert-liteVer`）
+3. 进入解压后的**仓库根目录**，找到 `install.ps1`
+4. **完全退出 WorkBuddy**（Windows 托盘右键→退出；Mac Command+Q）
+5. 右键 `install.ps1` → **「使用 PowerShell 运行」**（脚本自动把专家包写入 `my-experts` 并注册，运行完提示「安装完成」）
+6. 重新打开 WorkBuddy → 进入【我的专家】即可看到「效贷效融测试专家【Lite版】」
 
-> 该仓库已内置 `.codebuddy-plugin/marketplace.json` 市场清单，市场源添加后即可识别到「效贷效融测试专家【Lite版】」专家包。
+> 说明：`install.ps1` 不依赖 WorkBuddy「添加团队市场」的自动注册（该流程在部分客户端版本不稳定，可能出现「点了 + 但专家不显示」），改为直接写入，确保稳定可用。脚本**幂等**，重装/升级重复运行安全。
 
-### 第 2 步：安装专家（仅首次）
+### 第 2 步：通过团队市场安装（备选）
 
-在「技能 → 套件 / 专家」页找到 **xiaodai-testing-expert-lite**（展示名「效贷效融测试专家【Lite版】」），点击卡片右上角 **「+」** 安装。
+如果你更习惯用「添加团队市场」：左侧栏 **「专家·技能·链接」** → **「技能」→「套件」** → 右上角 **「+」** 填 `hansonzhang0606-ux/xiaodai-test-expert-liteVer` → 找到卡片点 **「+」** 安装。
 
-> Lite 版为 **Agent 型专家**，内嵌 3 个平级 Skill（编排器 `xiaodai-lite-orchestrator`、业务 `ai-testcase-workflow-skill`、时间 `time-tracking-skill`），安装即完成注册，**无需额外运行注册脚本**。
-> 若安装后「我的专家」未出现，请**完全退出 WorkBuddy**（Windows 托盘右键→退出；Mac Command+Q）再重新打开。
+> 该仓库已内置 `.codebuddy-plugin/marketplace.json` 市场清单。若此方式安装后【我的专家】未出现，请用第 1 步的 `install.ps1` 兜底（幂等，重复运行不会破坏已有配置）。
 
 ### 第 3 步：MySQL 初始化（AI 自动完成，无需手动开 CMD）
 
@@ -100,8 +102,8 @@
 **Q1：输入姓名后提示"不在花名册中"**
 联系管理员将你的姓名添加到花名册（管理员直接 INSERT/UPDATE MySQL `agent_team_roster` 表，全团队即时生效）。注意输入**真实姓名**，不用昵称。
 
-**Q2/Q3：安装后「专家」中看不到效贷效融测试专家【Lite版】**
-Lite 为 Agent 型专家，安装即注册，无独立注册脚本。请确认市场源 `hansonzhang0606-ux/xiaodai-test-expert-liteVer` 已添加且专家已安装；仍看不到请**完全退出**（Windows 托盘右键→退出；Mac Command+Q）WorkBuddy 重新打开，或重新安装一次。仍异常联系管理员。
+**Q2/Q3：安装后「我的专家」中看不到效贷效融测试专家【Lite版】**
+首选确认已运行仓库根目录的 `install.ps1`（推荐安装方式，直接写入 `my-experts`）。若已运行仍看不到：检查 `C:\Users\<用户名>\.workbuddy\plugins\marketplaces\my-experts\plugins\` 下是否有 `xiaodai-testing-expert-lite` 目录、以及 `my-experts\.codebuddy-plugin\marketplace.json` 是否含 `xiaodai-testing-expert-lite` 条目；并**完全退出**（Windows 托盘右键→退出；Mac Command+Q）WorkBuddy 重新打开。若曾用「添加团队市场」安装失败，直接运行 `install.ps1` 兜底即可。仍异常联系管理员。
 
 **Q4：专家找不到我的需求文档**
 确保给的是**目录路径**或 **Confluence URL**，而非单个文件：
@@ -121,10 +123,10 @@ Lite 为 Agent 型专家，安装即注册，无独立注册脚本。请确认�
 首启时选择本次业务线（效贷/效融/小贷），选定后整个会话归属该线。**换业务线必须新开会话**，当前会话不自动切换；各业务线数据隔离。
 
 **Q8：换电脑了怎么办**
-重新安装（加市场源→装专家→重启）→ 首次使用身份验证通过后 **AI 自动重新生成 MySQL 配置模板** → 本地按备注填写密码。历史数据不丢（存在团队共享 MySQL）。
+重新安装（下载仓库 ZIP → 运行 `install.ps1` → 重启 WorkBuddy）→ 首次使用身份验证通过后 **AI 自动重新生成 MySQL 配置模板** → 本地按备注填写密码。历史数据不丢（存在团队共享 MySQL）。
 
 **Q9：专家更新了怎么更新本地**
-①「套件/专家」→「我安装的」→ xiaodai-testing-expert-lite 点「更新」；② 完全退出 WorkBuddy 重开即可（Lite 无独立注册脚本，无需重跑）。
+重新下载仓库 ZIP，运行 `install.ps1`（幂等覆盖，无需先卸载）；或在「套件/专家」→「我安装的」→ xiaodai-testing-expert-lite 点「更新」。完成后完全退出 WorkBuddy 重开即可。
 
 **Q10：新电脑上找不到 mysql_config.json**
 正常现象（本机私有配置，不随包分发）。每台电脑首次使用身份验证通过后 AI 自动生成配置模板；或等专家引导初始化，按 `mysql_config.notes.md` 备注填写密码。
