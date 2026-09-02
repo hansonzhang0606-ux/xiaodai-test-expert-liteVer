@@ -13,7 +13,7 @@
 2. 右上角 **「+」** → 填写市场源：`hansonzhang0606-ux/xiaodai-test-expert-liteVer`
 3. 提交（不需要带 `https://` 前缀）
 
-> 该仓库根目录已内置 `marketplace.json`，市场源添加后即可识别到「效贷效融测试专家【Lite版】」专家包。
+> 该仓库已内置 `.codebuddy-plugin/marketplace.json` 市场清单，市场源添加后即可识别到「效贷效融测试专家【Lite版】」专家包。
 
 ### 第 2 步：安装专家（仅首次）
 
