@@ -106,6 +106,35 @@ def build_record_command(args: argparse.Namespace, skill_root: Path) -> list[str
     return command
 
 
+def sync_to_mysql_after_record(biz_line: str) -> int:
+    """v6.1: 写入本地记录后立即同步到 MySQL，消除定时任务时序盲区。
+
+    同步失败不阻断本地落盘（本地 records.jsonl 是 source of truth），
+    但必须明确告警，便于测试人员感知并手动重试。
+    """
+    try:
+        skill_root = time_tracking_skill_root()
+        sync_script = skill_root / "scripts" / "sync_to_mysql.py"
+        if not sync_script.is_file():
+            print("⚠️ 未找到 sync_to_mysql.py，跳过自动同步（本地记录已保存）。", file=sys.stderr)
+            return 0
+        cmd = [sys.executable, str(sync_script), "--biz-line", biz_line]
+        env = os.environ.copy()
+        env["PYTHONIOENCODING"] = "utf-8"
+        r = subprocess.run(
+            cmd, capture_output=True, text=True, encoding="utf-8", errors="replace", env=env, check=False
+        )
+        if r.returncode == 0:
+            print("✅ 已自动同步到 MySQL（agent_time_tracking）。")
+        else:
+            tail = (r.stderr or r.stdout).strip().replace("\n", " ")[:400]
+            print(f"⚠️ 自动同步 MySQL 失败（本地记录已保存，待计划任务重试）：{tail}", file=sys.stderr)
+        return r.returncode
+    except Exception as e:  # noqa: BLE001
+        print(f"⚠️ 自动同步异常（本地记录已保存）：{e}", file=sys.stderr)
+        return 1
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.0）"
@@ -138,7 +167,11 @@ def main(argv: list[str] | None = None) -> int:
         print("身份验证失败，当前人员无权记录该业务线数据。", file=sys.stderr)
         return 3
     result = subprocess.run(build_record_command(args, skill_root), check=False)
-    return result.returncode
+    if result.returncode != 0:
+        return result.returncode
+    # v6.1: 本地落盘成功后立即同步到 MySQL，不再依赖定时任务的时序
+    sync_to_mysql_after_record(args.biz_line)
+    return 0
 
 
 if __name__ == "__main__":

@@ -7,7 +7,7 @@ SKILL_ROOT = Path(__file__).resolve().parents[1]
 PACKAGE_ROOT = SKILL_ROOT.parent
 
 
-class ReleaseMetadataV59Tests(unittest.TestCase):
+class ReleaseMetadataV62Tests(unittest.TestCase):
     def test_current_version_is_consistent(self):
         version = (SKILL_ROOT / "VERSION").read_text(encoding="utf-8").strip()
         readme = (SKILL_ROOT / "README.md").read_text(encoding="utf-8")
@@ -23,13 +23,13 @@ class ReleaseMetadataV59Tests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertEqual(version, "5.9")
-        self.assertIn("v5.9", "\n".join(readme.splitlines()[:12]))
-        self.assertIn("当前发布版本：**v5.9**", skill)
-        self.assertIn("v5.9", prompt.splitlines()[0])
-        self.assertIn("v5.9", "\n".join(release_notes.splitlines()[:10]))
-        self.assertIn("v5.9", "\n".join(record_script.splitlines()[:15]))
-        self.assertIn("v5.9", "\n".join(sync_script.splitlines()[:15]))
+        self.assertEqual(version, "6.2")
+        self.assertIn("v6.2", "\n".join(readme.splitlines()[:12]))
+        self.assertIn("当前发布版本：**v6.2**", skill)
+        self.assertIn("v6.2", prompt.splitlines()[0])
+        self.assertIn("v6.2", "\n".join(release_notes.splitlines()[:10]))
+        self.assertIn("v6.2", "\n".join(record_script.splitlines()[:15]))
+        self.assertIn("v6.2", "\n".join(sync_script.splitlines()[:15]))
 
     def test_skill_frontmatter_is_discoverable(self):
         skill = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8")

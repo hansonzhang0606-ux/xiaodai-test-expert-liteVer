@@ -7,7 +7,7 @@ description: >-
 
 # 测试人员时间节省追踪 Skill
 
-> 当前发布版本：**v5.9**
+> 当前发布版本：**v6.2**
 
 > 从「效贷测试专家」抽取而来的独立子 Skill，用于嵌入其他测试团队的 Skill 套件。
 > 核心能力：**追踪并量化测试工作中 AI 为每位测试人员节省的时间**。
@@ -31,7 +31,7 @@ description: >-
 
 ```
 time-tracking-skill/
-├── VERSION                           # 当前发布版本：5.9
+├── VERSION                           # 当前发布版本：6.2
 ├── SKILL.md                          # 本文件
 ├── README.md                         # 使用与部署说明
 ├── prompts/
@@ -54,7 +54,7 @@ time-tracking-skill/
 │   └── pymysql/                      # 打包的纯 Python MySQL 驱动
 ├── sql/
 │   └── upgrade_v5.8_to_v5.9.sql     # 管理员手动执行的可重复升级脚本
-└── tests/                            # v5.9 自动化回归与发布契约测试
+└── tests/                            # v6.2 自动化回归与发布契约测试
 ```
 
 ## 三、部署必做（仅一步）
@@ -148,5 +148,5 @@ AI 在每个步骤完成后如何收集时间、如何生成报告，详见 `pro
 
 > - **脚本层完全宿主无关**：全部脚本是纯命令行（`.py` / `.bat`），两类场景共用，无需重复开发
 > - **记录链路一致**：每步时间 → 本地 `records.jsonl` → `sync_to_mysql.py`（定时任务 09:00/12:00/18:00）→ 共享 MySQL
-> - **幂等键兼容**：`record_key = MD5(biz_line_code|employee|user_story|step_code|timestamp)`，同表并存不冲突
+> - **幂等键兼容（两层去重 v6.2）**：`record_key = MD5(biz_line_code|employee|user_story|step_code|timestamp)` 保证同条记录重同步不新增行；另按 `(biz_line_code, employee, user_story_code, step_code, time_saved_hours)` 业务字段组合去重，避免不同 timestamp 但业务相同的记录重复入库
 > - **本机配置共用**：`mysql_config.json` 是本机私有配置，同一台电脑两种工具共用一份
