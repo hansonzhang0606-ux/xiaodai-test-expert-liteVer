@@ -7,7 +7,7 @@ description: >-
 
 # 测试人员时间节省追踪 Skill
 
-> 当前发布版本：**v5.9**
+> 当前发布版本：**v6.2**
 
 > 从「效贷测试专家」抽取而来的独立子 Skill，用于嵌入其他测试团队的 Skill 套件。
 > 核心能力：**追踪并量化测试工作中 AI 为每位测试人员节省的时间**。
@@ -31,7 +31,7 @@ description: >-
 
 ```
 time-tracking-skill/
-├── VERSION                           # 当前发布版本：5.9
+├── VERSION                           # 当前发布版本：6.2
 ├── SKILL.md                          # 本文件
 ├── README.md                         # 使用与部署说明
 ├── prompts/
@@ -54,7 +54,7 @@ time-tracking-skill/
 │   └── pymysql/                      # 打包的纯 Python MySQL 驱动
 ├── sql/
 │   └── upgrade_v5.8_to_v5.9.sql     # 管理员手动执行的可重复升级脚本
-└── tests/                            # v5.9 自动化回归与发布契约测试
+└── tests/                            # v6.2 自动化回归与发布契约测试
 ```
 
 ## 三、部署必做（仅一步）

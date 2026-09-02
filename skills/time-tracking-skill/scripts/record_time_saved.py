@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-时间节省记录脚本 v5.9（通用多业务线版）
+时间节省记录脚本 v6.2（通用多业务线版）
 在工作流每个步骤完成后，记录该步骤为人类员工节省了多少时间。
 
 v5.9 增量:
@@ -340,7 +340,7 @@ def sync_to_excel_if_configured(record: dict, biz_line: str):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="记录时间节省数据 v5.9")
+    parser = argparse.ArgumentParser(description="记录时间节省数据 v6.2")
     parser.add_argument("--employee", required=True, help="员工姓名（需在花名册中）")
     parser.add_argument("--user-story", required=True, help="用户故事名称/编号")
     parser.add_argument("--step", default="", help="步骤名称（如：文档整理）")

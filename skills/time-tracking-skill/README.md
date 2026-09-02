@@ -1,4 +1,4 @@
-# 测试人员时间节省追踪 Skill（通用多业务线版 · MySQL-only · v5.9）
+# 测试人员时间节省追踪 Skill（通用多业务线版 · MySQL-only · v6.2）
 
 > 从「效贷测试专家」v1.5.0 抽取而来的独立子 Skill，可嵌入任意测试团队的 Skill 套件。
 > 用于追踪并量化测试工作中 AI 为每位测试人员节省的时间。
@@ -174,14 +174,14 @@ python scripts/sync_to_mysql.py --biz-line "智慧记+运营系统"
 
 ```
 time-tracking-skill/
-├── VERSION                     # 当前发布版本：5.9
+├── VERSION                     # 当前发布版本：6.2
 ├── SKILL.md                    # Skill 入口（AI 读）
 ├── README.md                   # 本文件（人读）
 ├── prompts/time_tracking.md    # AI 执行规则（v5 MySQL-only 口径）
 ├── config/                     # 主配置（业务线/存储/MySQL）+ 花名册
 ├── scripts/                    # 全部脚本（含打包的 pymysql）
 ├── sql/                        # 管理员手动执行的数据库升级脚本
-└── tests/                      # v5.9 回归与发布契约测试
+└── tests/                      # v6.2 回归与发布契约测试
 ```
 
 ## 8. 版本来源
@@ -200,4 +200,6 @@ time-tracking-skill/
 - v5.7：时间记录增加 `agent_start_time` / `agent_end_time` / `agent_duration_minutes` 三个字段，`record_time_saved.py` 新增对应 CLI 参数，`sync_to_mysql.py` 在 upsert 时同步写入 MySQL `agent_time_tracking` 表，解决表中该三字段长期为 NULL 的问题；`prompts/time_tracking.md` 明确要求 AI 在步骤开始/结束时采集智能体执行耗时并传入脚本。
 - v5.8：定时任务自动注册从「提示词内联 3 条带 `<scripts目录>` 占位符的 schtasks 命令（模型无法可靠填出路径，导致其他电脑/测试人员从未真正建出任务）」改为**确定性脚本调用** `python scripts/register_sync_tasks.py --biz-line {biz_line}`；新增 `scripts/register_sync_tasks.py`（用 `__file__` 自定位 `sync_task.bat`、按业务线幂等注册 早/午/晚 三任务、注册失败给明确提示），彻底解决跨机器自动建任务的根因；注册时机从「MySQL 配置就绪后」提前到「业务线确定后」。
 - v5.9：新增 `--ai-estimated-time-saved-hours` 与 MySQL 同名可空列；“采纳”和两次追问仍无实际值统一取参考范围中间值，后者写固定备注；未升级数据库时保留 v5.8 同步路径，DDL 只由管理员手动执行。
+- v6.1：提交即自动同步——`secure_record_time_saved.py` 在本地 records.jsonl 落盘成功后内置调用 `sync_to_mysql.py` 立即同步 MySQL，不再依赖定时任务时序；同步失败本地保留、由计划任务（09:00/12:00/18:00）重试并告警。
+- v6.2：同步两层去重——`sync_to_mysql.py` 在 `record_key` 幂等 upsert 之外，新增 `(biz_line_code, employee, user_story_code, step_code, time_saved_hours)` 五字段组合去重，命中返回 skipped_dup 跳过，避免同环节重跑多插一行；新增 `verify_story_sync.py`（本地有/库无比对）与 `check_missing_time_records.py`（支持 `--steps 01,04,06` 定向核查）做主链路完成核验；统一发布版本号至 v6.2。
 - 抽取日期：2026-08-18

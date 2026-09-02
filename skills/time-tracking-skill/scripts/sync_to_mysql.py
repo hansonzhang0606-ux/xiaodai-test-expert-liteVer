@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-时间节省数据同步到 MySQL v5.9（通用多业务线版）
+时间节省数据同步到 MySQL v6.2（通用多业务线版）
 
 读取本地 JSONL 记录，幂等 upsert 到 MySQL 的 agent_time_tracking 表。
 pymysql 已打包进本脚本同目录（scripts/pymysql/），无需 pip install，离线可用。
@@ -15,7 +15,9 @@ pymysql 已打包进本脚本同目录（scripts/pymysql/），无需 pip instal
 数据源: ~/.workbuddy/data/time-tracking/{biz_line}/records.jsonl
 配置:   ~/.workbuddy/data/time-tracking/{biz_line}/mysql_config.json
 幂等:   唯一键 record_key = MD5(biz_line_code|employee|user_story|step_code|timestamp秒)
-        INSERT ... ON DUPLICATE KEY UPDATE，重复同步不会产生重复数据。
+        INSERT ... ON DUPLICATE KEY UPDATE 处理同一条本地记录重同步（按 record_key 更新其余字段）；
+        另按业务字段组合 (biz_line_code, employee, user_story_code, step_code, time_saved_hours)
+        做去重预检，相同组合视为同一业务动作，避免不同 timestamp 但业务相同的记录重复入库。
 v5.9:   目标表存在 ai_estimated_time_saved_hours 时同步该字段；不存在时保留 v5.8 同步路径。
 """
 
@@ -154,6 +156,29 @@ def read_jsonl_records(biz_line):
     return records
 
 
+def record_key_exists(conn, table, record_key):
+    """判断 record_key 是否已存在于目标表（区分'同一条记录重同步'与'新记录'）"""
+    sql = f"SELECT COUNT(*) AS cnt FROM {table} WHERE record_key=%s"
+    with conn.cursor() as cur:
+        cur.execute(sql, (record_key,))
+        row = cur.fetchone() or {}
+    return int(row.get("cnt", 0)) > 0
+
+
+def business_dup_exists(conn, table, biz_line_code, employee, user_story_code, step_code, time_saved_hours):
+    """业务字段去重：5 字段组合已存在则视为重复业务动作，避免不同 timestamp 的记录重复入库"""
+    sql = f"""
+        SELECT COUNT(*) AS cnt FROM {table}
+        WHERE biz_line_code=%s AND employee=%s AND user_story_code=%s
+          AND step_code=%s AND time_saved_hours=%s
+    """
+    with conn.cursor() as cur:
+        cur.execute(sql, (biz_line_code, employee, user_story_code, step_code,
+                          float(time_saved_hours)))
+        row = cur.fetchone() or {}
+    return int(row.get("cnt", 0)) > 0
+
+
 def upsert_record(
     conn,
     table,
@@ -162,11 +187,21 @@ def upsert_record(
     biz_line_code,
     include_ai_estimate=False,
 ):
-    """幂等 upsert 一条记录（record_key 唯一键兜底）"""
+    """幂等 upsert 一条记录（record_key 唯一键兜底；额外按业务字段组合去重）"""
     record_key = compute_record_key(record, biz_line_code)
     user_story_code = extract_user_story_code(record)
     ts = normalize_timestamp(record.get("timestamp"))
     date_val = record.get("date", "") or (ts[:10] if ts else "")
+
+    # —— 业务字段去重：相同 (biz_line_code, employee, user_story_code, step_code, time_saved_hours)
+    #     视为同一业务动作。不同 timestamp 但业务字段相同 → 跳过，不重复入库。
+    #     若 record_key 已存在，说明是同一条本地记录重同步，仍走 upsert 更新其余字段。 ——
+    _employee = record.get("employee", "") or ""
+    _step_code = record.get("step_code", "") or ""
+    _hours = float(record.get("time_saved_hours", 0) or 0)
+    if not record_key_exists(conn, table, record_key) and \
+       business_dup_exists(conn, table, biz_line_code, _employee, user_story_code, _step_code, _hours):
+        return "skipped_dup"
 
     sql = f"""
         INSERT INTO {table}
@@ -241,6 +276,7 @@ def upsert_record(
         """
     with conn.cursor() as cur:
         cur.execute(sql, params)
+    return "upserted"
 
 
 def main():
@@ -294,9 +330,10 @@ def main():
 
     ok = 0
     fail = 0
+    skipped = 0
     for r in records:
         try:
-            upsert_record(
+            status = upsert_record(
                 conn,
                 table,
                 r,
@@ -304,9 +341,14 @@ def main():
                 biz_line_code,
                 include_ai_estimate=include_ai_estimate,
             )
-            ok += 1
-            print(f"  ✅ {r.get('date')} | {r.get('employee')} | {r.get('step_code')} "
-                  f"{r.get('step')} | {r.get('total_hours')}h")
+            if status == "skipped_dup":
+                skipped += 1
+                print(f"  ⏭️  跳过(业务重复): {r.get('date')} | {r.get('employee')} | "
+                      f"{r.get('step_code')} {r.get('step')} | {r.get('total_hours')}h")
+            else:
+                ok += 1
+                print(f"  ✅ {r.get('date')} | {r.get('employee')} | {r.get('step_code')} "
+                      f"{r.get('step')} | {r.get('total_hours')}h")
         except Exception as e:
             fail += 1
             print(f"  ❌ {r.get('date')} | {r.get('employee')} | {r.get('step')} → {e}")
@@ -315,7 +357,7 @@ def main():
     conn.close()
 
     print("\n" + "=" * 62)
-    print(f"同步完成: 成功 {ok} 条 / 失败 {fail} 条 / 合计 {len(records)} 条")
+    print(f"同步完成: 成功 {ok} 条 / 跳过(重复) {skipped} 条 / 失败 {fail} 条 / 合计 {len(records)} 条")
     print("=" * 62)
 
     if fail > 0:
