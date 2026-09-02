@@ -1,11 +1,21 @@
 #!/usr/bin/env python3
-"""Strict identity gate for time-tracking-skill v5.9 records.
+"""Strict identity gate for time-tracking-skill v6.2 records.
 
 This wrapper preserves the original time-tracking Skill unchanged. It fails closed
 when the MySQL roster is unavailable, requires an exact active employee match for
 the selected business line, and never prints roster members on authorization
 failure. Only after authorization does it delegate persistence to the original
 record_time_saved.py.
+
+v6.1: 本地 records.jsonl 落盘成功后立即触发 sync_to_mysql.py 同步。
+v6.3: 写盘前强制检查「编号更小」的追踪环节是否已记录（脚本级，不依赖提示词自觉）。
+      存在缺失时拒绝落盘并返回退出码 2；仅在人员明确回复「跳过」后允许
+      --force-with-missing 放行，并把跳过原因写入 remark 便于追溯。
+
+退出码:
+  0  成功
+  2  被前序环节缺失拦截（需先补录或明确跳过）
+  3  身份验证失败
 """
 
 from __future__ import annotations
@@ -135,6 +145,49 @@ def sync_to_mysql_after_record(biz_line: str) -> int:
         return 1
 
 
+def check_prior_missing(
+    skill_root: Path, biz_line: str, employee: str, user_story: str, step_code: str
+) -> list[str]:
+    """v6.3: 写盘前检查「编号更小」的追踪环节是否已记录，返回缺失的 step_code 列表。
+
+    这是脚本级强制，不依赖提示词自觉——AI 无法静默跳过前序环节的补录。
+    检测脚本缺失或调用失败时返回空列表（不因检测能力不可用而阻断业务落盘）。
+    """
+    script = skill_root / "scripts" / "check_missing_time_records.py"
+    if not script.is_file():
+        return []
+    command = [
+        sys.executable,
+        str(script),
+        "--biz-line",
+        biz_line,
+        "--employee",
+        employee,
+        "--user-story",
+        user_story,
+        "--current-step-code",
+        step_code,
+    ]
+    env = os.environ.copy()
+    env["PYTHONIOENCODING"] = "utf-8"
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=env,
+            check=False,
+        )
+        if result.returncode != 0:
+            return []
+        payload = json.loads(result.stdout)
+        return list(payload.get("missing") or [])
+    except (json.JSONDecodeError, TypeError, OSError, ValueError):
+        return []
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.0）"
@@ -152,6 +205,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--agent-end-time", default="")
     parser.add_argument("--agent-duration-minutes", type=float, default=None)
     parser.add_argument("--ai-estimated-time-saved-hours", type=float, default=None)
+    parser.add_argument(
+        "--force-with-missing",
+        action="store_true",
+        help="v6.3: 前序环节缺失时仍强制写入。仅在已引导补录且人员明确回复「跳过」后使用",
+    )
+    parser.add_argument(
+        "--missing-reason",
+        default="",
+        help="配合 --force-with-missing，说明前序环节未记录的原因（如「人员跳过环节01」）",
+    )
     return parser
 
 
@@ -166,6 +229,42 @@ def main(argv: list[str] | None = None) -> int:
     if not authorize_employee(roster, args.employee, args.biz_line):
         print("身份验证失败，当前人员无权记录该业务线数据。", file=sys.stderr)
         return 3
+
+    # v6.3: 脚本级强制 —— 写盘前检查前序追踪环节是否已记录，杜绝「跳步漏记」
+    missing = check_prior_missing(
+        skill_root, args.biz_line, args.employee, args.user_story, args.step_code
+    )
+    if missing and not args.force_with_missing:
+        print(
+            json.dumps(
+                {
+                    "status": "blocked",
+                    "step_code": args.step_code,
+                    "missing": missing,
+                    "message": (
+                        f"环节 {args.step_code} 的记录被拦截：检测到前序环节 "
+                        f"{'、'.join(missing)} 尚未记录节省时间。"
+                        "请先按编号升序逐个补录（人员可回复「跳过」），之后再对本环节重试；"
+                        "若人员已明确跳过，请加 --force-with-missing 并用 --missing-reason 说明原因。"
+                    ),
+                },
+                ensure_ascii=False,
+                indent=2,
+            ),
+            file=sys.stderr,
+        )
+        return 2
+    if missing and args.force_with_missing:
+        print(
+            f"⚠️ 前序环节 {'、'.join(missing)} 未记录，按 --force-with-missing 继续写入"
+            f"（原因：{args.missing_reason or '未提供'}）",
+            file=sys.stderr,
+        )
+        if args.missing_reason:
+            args.remark = (
+                f"{args.remark} [前序环节 {'、'.join(missing)} 未记录：{args.missing_reason}]"
+            ).strip()
+
     result = subprocess.run(build_record_command(args, skill_root), check=False)
     if result.returncode != 0:
         return result.returncode
