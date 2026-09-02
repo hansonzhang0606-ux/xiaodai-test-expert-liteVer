@@ -125,7 +125,7 @@ schtasks /create /tn "智慧记运营时间同步-晚" /tr "C:\...\time-tracking
 
 ```bat
 python sync_to_mysql.py --biz-line "智慧记+运营系统" --dry-run    :: 试运行，只看不写
-python sync_to_mysql.py --biz-line "智慧记+运营系统"              :: 真实同步（幂等，重复跑无副作用）
+python sync_to_mysql.py --biz-line "智慧记+运营系统"              :: 真实同步（两层去重，重复跑无副作用）
 ```
 
 ## 4. 存储模式选择（可选）

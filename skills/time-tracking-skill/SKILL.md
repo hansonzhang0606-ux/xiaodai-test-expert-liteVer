@@ -148,5 +148,5 @@ AI 在每个步骤完成后如何收集时间、如何生成报告，详见 `pro
 
 > - **脚本层完全宿主无关**：全部脚本是纯命令行（`.py` / `.bat`），两类场景共用，无需重复开发
 > - **记录链路一致**：每步时间 → 本地 `records.jsonl` → `sync_to_mysql.py`（定时任务 09:00/12:00/18:00）→ 共享 MySQL
-> - **幂等键兼容**：`record_key = MD5(biz_line_code|employee|user_story|step_code|timestamp)`，同表并存不冲突
+> - **幂等键兼容（两层去重 v6.2）**：`record_key = MD5(biz_line_code|employee|user_story|step_code|timestamp)` 保证同条记录重同步不新增行；另按 `(biz_line_code, employee, user_story_code, step_code, time_saved_hours)` 业务字段组合去重，避免不同 timestamp 但业务相同的记录重复入库
 > - **本机配置共用**：`mysql_config.json` 是本机私有配置，同一台电脑两种工具共用一份
