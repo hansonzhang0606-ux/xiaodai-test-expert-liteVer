@@ -190,7 +190,7 @@ def check_prior_missing(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.1）"
+        description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.2）"
     )
     parser.add_argument("--employee", required=True, help="员工姓名，精确匹配")
     parser.add_argument("--user-story", required=True, help="用户故事名称或编号")

@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "expert_version": "1.0.1",
+  "expert_version": "1.0.2",
   "baselines": {
     "ai-testcase-workflow-skill": "v3.7-current-working-tree",
     "time-tracking-skill": "v5.9-distribution-defaults-sanitized",
-    "xiaodai-lite-orchestrator": "1.0.1"
+    "xiaodai-lite-orchestrator": "1.0.2"
   },
   "files": {
     "skills/ai-testcase-workflow-skill/.gitignore": "79caf3a96b2cf252641868f09433aa63e7c78b0549301ae5a7660e7bd0101662",

@@ -80,22 +80,24 @@ V2026.08.20 + 调资方接口前校验税票采集状态
 
 ## 输出
 
-- `{需求名}_测试用例.json`
-- `{需求名}_测试用例.xlsx`
+> **文件名前缀规则**：本环节（步骤⑥ 生成 Excel 测试用例）产出的所有过程文件，文件名必须以所属环节步骤编号 `6-` 作为前缀；本环节解析步骤④产物时，引用的测试点文件名也应带 `4-` 前缀。
+
+- `6-{需求名}_测试用例.json`
+- `6-{需求名}_测试用例.xlsx`
 
 ## 脚本调用
 
-如输入是 XMind：
+如输入是 XMind（步骤④产物，文件名带 `4-` 前缀）：
 
 ```bash
-python scripts/parse_xmind.py "{需求名}_测试点.xmind" -o "{需求名}_测试点_reviewed.json"
+python scripts/parse_xmind.py "4-{需求名}_测试点.xmind" -o "6-{需求名}_测试点_parsed.json"
 ```
 
-细化并生成 Excel：
+细化并生成 Excel（以解析产物为输入）：
 
 ```bash
-python scripts/refine_testcases.py "{测试点JSON}" --caseGroup "{功能路径}" --version "{版本号}" --manager "{责任人}" --relateReqCode "{需求编码}"
-python scripts/generate_excel.py "{测试用例JSON}" --caseGroup "{功能路径}" --version "{版本号}" --manager "{责任人}" --relateReqCode "{需求编码}"
+python scripts/refine_testcases.py "6-{需求名}_测试点_parsed.json" --caseGroup "{功能路径}" --version "{版本号}" --manager "{责任人}" --relateReqCode "{需求编码}"
+python scripts/generate_excel.py "6-{需求名}_测试用例.json" --caseGroup "{功能路径}" --version "{版本号}" --manager "{责任人}" --relateReqCode "{需求编码}"
 ```
 
 ## 禁止项

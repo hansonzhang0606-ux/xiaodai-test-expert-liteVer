@@ -1,15 +1,15 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.2",
   "artifacts": [
     {
-      "file": "xiaodai-test-expert-liteVer-v1.0.1-source.zip",
-      "size": 1579864,
-      "sha256": "1609a874ef941cda17d8f1c187d4d39b30741b302afee420a0c08eb660a84a6e"
+      "file": "xiaodai-test-expert-liteVer-v1.0.2-source.zip",
+      "size": 1581234,
+      "sha256": "24bb30202873594f9f5c69f57be09249946f9a142dc525d0a38bda5218355875"
     },
     {
-      "file": "xiaodai-testing-expert-lite-v1.0.1-workbuddy.zip",
-      "size": 514220,
-      "sha256": "58256ce27ef27ff8c3f5a4bbba2faa213956eff47ce7871122ef2901fb399052"
+      "file": "xiaodai-testing-expert-lite-v1.0.2-workbuddy.zip",
+      "size": 514677,
+      "sha256": "6bcc21393b9a1daaabd14518c0fd3e970fec320afac9b19e65387b3421a26afd"
     }
   ]
 }

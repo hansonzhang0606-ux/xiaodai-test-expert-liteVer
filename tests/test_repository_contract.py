@@ -99,7 +99,7 @@ class RepositoryContractTests(unittest.TestCase):
             manifest["defaultInitPrompt"]["zh"], manifest["quickPrompts"][0]["zh"]
         )
         zh = manifest["displayDescription"]["zh"]
-        self.assertTrue(zh.startswith("【v1.0.1】"))
+        self.assertTrue(zh.startswith("【v1.0.2】"))
         self.assertGreaterEqual(len(zh), 40)
         self.assertLessEqual(len(zh), 50)
         self.assertEqual(
@@ -169,8 +169,8 @@ class RepositoryContractTests(unittest.TestCase):
             self.assertEqual(actual, expected, relative)
 
     def test_release_archives_have_expected_topology(self):
-        expert_zip = ROOT / "dist/xiaodai-testing-expert-lite-v1.0.1-workbuddy.zip"
-        source_zip = ROOT / "dist/xiaodai-test-expert-liteVer-v1.0.1-source.zip"
+        expert_zip = ROOT / "dist/xiaodai-testing-expert-lite-v1.0.2-workbuddy.zip"
+        source_zip = ROOT / "dist/xiaodai-test-expert-liteVer-v1.0.2-source.zip"
         self.assertTrue(expert_zip.is_file())
         self.assertTrue(source_zip.is_file())
         with zipfile.ZipFile(expert_zip) as archive:
@@ -190,8 +190,8 @@ class RepositoryContractTests(unittest.TestCase):
         )
         text_suffixes = {".md", ".json", ".yaml", ".yml", ".py", ".bat", ".txt"}
         for archive_path in (
-            ROOT / "dist/xiaodai-testing-expert-lite-v1.0.1-workbuddy.zip",
-            ROOT / "dist/xiaodai-test-expert-liteVer-v1.0.1-source.zip",
+            ROOT / "dist/xiaodai-testing-expert-lite-v1.0.2-workbuddy.zip",
+            ROOT / "dist/xiaodai-test-expert-liteVer-v1.0.2-source.zip",
         ):
             with zipfile.ZipFile(archive_path) as archive:
                 for name in archive.namelist():
