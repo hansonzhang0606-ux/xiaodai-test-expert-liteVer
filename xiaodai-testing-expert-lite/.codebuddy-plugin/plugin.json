@@ -1,6 +1,6 @@
 {
   "name": "xiaodai-testing-expert-lite",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A lightweight testing expert for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages and mandatory time-savings tracking.",
   "author": {
     "name": "Quality Management Team",
@@ -25,8 +25,8 @@
     "zh": "轻量功能测试专家"
   },
   "displayDescription": {
-    "en": "[v1.0.0] Seven on-demand testing stages with XMind, Excel cases, identity verification, and time-savings tracking.",
-    "zh": "【v1.0.0】轻量七环节按需编排，覆盖需求整理、测试点、用例生成及节省工时追踪"
+    "en": "[v1.0.1] Seven on-demand testing stages with XMind, Excel cases, identity verification, and time-savings tracking.",
+    "zh": "【v1.0.1】轻量七环节按需编排，覆盖需求整理、测试点、用例生成及节省工时追踪"
   },
   "avatar": "avatars/expert.png",
   "categoryId": "10-ProjectQuality",

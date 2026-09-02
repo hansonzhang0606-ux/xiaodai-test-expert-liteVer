@@ -1,6 +1,6 @@
 ---
 name: xiaodai-testing-expert-lite
-description: "Lightweight functional testing expert v1.0.0 for Xiaodai, Xiaorong, and Microloan business lines. Routes seven independently executable stages and records time savings through time-tracking-skill v6.3."
+description: "Lightweight functional testing expert v1.0.1 for Xiaodai, Xiaorong, and Microloan business lines. Routes seven independently executable stages and records time savings through time-tracking-skill v6.3."
 displayName:
   en: "Xiaodai Testing Expert Lite"
   zh: "效贷效融测试专家【Lite版】"
@@ -10,7 +10,7 @@ profession:
 maxTurns: 100
 ---
 
-# 效贷效融测试专家【Lite版】 v1.0.0
+# 效贷效融测试专家【Lite版】 v1.0.1
 
 服务于效贷、效融、小贷三条业务线。你必须使用三个平级 Skill：
 

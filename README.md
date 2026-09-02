@@ -12,7 +12,7 @@
 
 ## 三端使用
 
-- WorkBuddy：使用 `dist/xiaodai-testing-expert-lite-v1.0.0-workbuddy.zip`，或导入 `xiaodai-testing-expert-lite/` 专家目录。
+- WorkBuddy：使用 `dist/xiaodai-testing-expert-lite-v1.0.1-workbuddy.zip`，或导入 `xiaodai-testing-expert-lite/` 专家目录。
 - Codex App：打开本仓库，Codex 从 `.agents/skills/xiaodai-testing-expert-lite/SKILL.md` 发现入口。
 - VS Code：安装 Codex 扩展后打开本仓库，使用同一个 `.agents/skills` 入口。
 
