@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict identity gate for time-tracking-skill v6.2 records.
+"""Strict identity gate for time-tracking-skill v6.3 records.
 
 This wrapper preserves the original time-tracking Skill unchanged. It fails closed
 when the MySQL roster is unavailable, requires an exact active employee match for

@@ -1,6 +1,6 @@
 # 效贷测试专家轻量版
 
-同一套工程同时面向 WorkBuddy、Codex App 和 Windows VS Code + Codex 扩展。它保留轻量测试业务 Skill v3.7 与时间追踪 Skill v5.9 的原有逻辑，通过一个薄编排器把七个可执行环节、三条业务线和节省工时反馈连接起来。
+同一套工程同时面向 WorkBuddy、Codex App 和 Windows VS Code + Codex 扩展。它保留轻量测试业务 Skill v3.7 与时间追踪 Skill v6.3 的原有逻辑，通过一个薄编排器把七个可执行环节、三条业务线和节省工时反馈连接起来。
 
 ## 日常流程
 

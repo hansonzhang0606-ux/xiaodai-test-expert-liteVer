@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-时间节省数据同步到 MySQL v6.2（通用多业务线版）
+时间节省数据同步到 MySQL v6.3（通用多业务线版）
 
 读取本地 JSONL 记录，幂等 upsert 到 MySQL 的 agent_time_tracking 表。
 pymysql 已打包进本脚本同目录（scripts/pymysql/），无需 pip install，离线可用。
