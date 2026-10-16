@@ -28,7 +28,12 @@ class ReleaseMetadataV62Tests(unittest.TestCase):
         self.assertIn(f"v{version}", "\n".join(readme.splitlines()[:12]))
         self.assertIn(f"当前发布版本：**v{version}**", skill)
         self.assertIn(f"v{version}", prompt.splitlines()[0])
-        self.assertIn(f"v{version}", "\n".join(release_notes.splitlines()[:10]))
+        # 更新说明里可能同时存在「Lite 包版本段」与「子 Skill 版本段」多个标题，
+        # 因此按标题行匹配而不是固定在文件开头，避免新增段落就误报（根因修复）
+        headings = [
+            line for line in release_notes.splitlines() if line.startswith("# ")
+        ]
+        self.assertTrue(any(f"v{version}" in heading for heading in headings))
         self.assertIn(f"v{version}", "\n".join(record_script.splitlines()[:15]))
         self.assertIn(f"v{version}", "\n".join(sync_script.splitlines()[:15]))
 

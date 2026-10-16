@@ -304,7 +304,7 @@ python scripts/register_sync_tasks.py --biz-line "{biz_line}"
    参考值：约 {min}~{max} {unit}（{basis}）
 
    👤 员工：{会话缓存的员工姓名}
-   📋 用户故事：___（请输入用户故事名称或编号，如 US-001-贷款审批流程优化）
+   📋 用户故事：___（请输入完整用户故事：<PRJ 编号>-<故事名称>，如 PRJ-00884552-贷款审批流程优化）
    ⏱️ 节省时间：___
       - 回复"采纳"→ 使用参考范围中间值
       - 或直接输入，如"4小时""0.5人天""1.5人天"
@@ -338,7 +338,7 @@ python scripts/register_sync_tasks.py --biz-line "{biz_line}"
 - "一天" / "1人天" → person_days=1.0（换算为 8.0 小时存储）
 - "1.5天" / "1.5人天" → person_days=1.5（换算为 12.0 小时存储）
 - "3.5" → 默认小时，hours=3.5
-- "新故事：US-002-还款计划" → 更新缓存的用户故事，然后继续等待时间输入
+- "新故事：PRJ-00884552-还款计划" → 更新缓存的用户故事，然后继续等待时间输入
 - 用户拒绝或未提供实际时间 → 再次强调必填，最多追问 2 次；仍未提供则使用 `(min_hours + max_hours) / 2`，固定 `remark="用户未反馈，采用参考中间值"`，自动进入保存，不再等待第三次确认
 
 > **单位换算规则（v3）**：无论员工输入的是小时还是人天，**底层存储统一为小时**。1 人天 = 8 小时。
@@ -673,8 +673,8 @@ python sync_to_mysql.py --biz-line {biz_line}              :: 真实同步（看
   "date": "2026-07-21",
   "biz_line": "{biz_line}",
   "employee": "{员工姓名}",
-  "user_story": "US-001-贷款审批流程优化",
-  "user_story_code": "PRJ-00769736",
+  "user_story": "PRJ-00884552-贷款审批流程优化",
+  "user_story_code": "PRJ-00884552",
   "step": "文档整理",
   "step_code": "01",
   "time_saved_hours": 4.0,

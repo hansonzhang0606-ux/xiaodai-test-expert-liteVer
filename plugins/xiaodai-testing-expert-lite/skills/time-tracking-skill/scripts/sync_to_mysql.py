@@ -117,7 +117,8 @@ def compute_record_key(record, biz_line_code):
     return hashlib.md5(key_str.encode("utf-8")).hexdigest()
 
 
-# 故事编号提取正则：匹配 PRJ-00769736 / US-001 / P-12345 等「前缀-数字」格式
+# 故事编号提取正则（宽松，仅供提取）：匹配「前缀-数字」格式，如 PRJ-00884552；
+# 历史遗留的 US-xxx / P-xxxxx 等编号仍可提取出来，但不会被当作合法 PRJ 编号通过完整性校验
 STORY_CODE_RE = re.compile(r"([A-Za-z]{1,8}-\d{3,})")
 
 
