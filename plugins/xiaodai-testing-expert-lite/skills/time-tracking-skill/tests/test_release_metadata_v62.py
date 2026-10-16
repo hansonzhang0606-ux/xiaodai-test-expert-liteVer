@@ -23,13 +23,14 @@ class ReleaseMetadataV62Tests(unittest.TestCase):
             encoding="utf-8"
         )
 
-        self.assertEqual(version, "6.2")
-        self.assertIn("v6.2", "\n".join(readme.splitlines()[:12]))
-        self.assertIn("当前发布版本：**v6.2**", skill)
-        self.assertIn("v6.2", prompt.splitlines()[0])
-        self.assertIn("v6.2", "\n".join(release_notes.splitlines()[:10]))
-        self.assertIn("v6.2", "\n".join(record_script.splitlines()[:15]))
-        self.assertIn("v6.2", "\n".join(sync_script.splitlines()[:15]))
+        # 版本号动态取自 VERSION，避免每次发版都要手改测试（根因修复）
+        self.assertRegex(version, r"^\d+\.\d+$")
+        self.assertIn(f"v{version}", "\n".join(readme.splitlines()[:12]))
+        self.assertIn(f"当前发布版本：**v{version}**", skill)
+        self.assertIn(f"v{version}", prompt.splitlines()[0])
+        self.assertIn(f"v{version}", "\n".join(release_notes.splitlines()[:10]))
+        self.assertIn(f"v{version}", "\n".join(record_script.splitlines()[:15]))
+        self.assertIn(f"v{version}", "\n".join(sync_script.splitlines()[:15]))
 
     def test_skill_frontmatter_is_discoverable(self):
         skill = (SKILL_ROOT / "SKILL.md").read_text(encoding="utf-8")

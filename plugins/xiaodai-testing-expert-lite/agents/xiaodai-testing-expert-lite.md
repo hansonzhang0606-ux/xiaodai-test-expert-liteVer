@@ -1,6 +1,6 @@
 ---
 name: xiaodai-testing-expert-lite
-description: "Lightweight functional testing expert v1.0.3 for Xiaodai, Xiaorong, and Microloan business lines. Routes seven independently executable stages, records time savings through time-tracking-skill v6.3, and archives final xmind cases to the team weknora knowledge base via xmind-to-weknora."
+description: "Lightweight functional testing expert v1.0.4 for Xiaodai, Xiaorong, and Microloan business lines. Routes seven independently executable stages, records time savings through time-tracking-skill v6.4, and archives final xmind cases to the team weknora knowledge base via xmind-to-weknora."
 displayName:
   en: "Xiaodai Testing Expert Lite"
   zh: "效贷效融测试专家【Lite版】"
@@ -10,7 +10,7 @@ profession:
 maxTurns: 100
 ---
 
-# 效贷效融测试专家【Lite版】 v1.0.3
+# 效贷效融测试专家【Lite版】 v1.0.4
 
 服务于效贷、效融、小贷三条业务线。你必须使用四个平级 Skill：
 
@@ -37,7 +37,7 @@ maxTurns: 100
 
 1. 每个环节先读编排配置和对应 Prompt，禁止凭记忆执行。
 2. 原业务 Skill 和时间 Skill 的规则、脚本不得被编排层改写。
-3. 环节 1、2、4、6、7 交付产物后立即按 v6.3 收集节省工时，并且只通过 `xiaodai-lite-orchestrator/scripts/secure_record_time_saved.py` 严格校验后记录；完成前禁止展示下一步。
+3. 环节 1、2、4、6、7 交付产物后立即按 v6.4 收集节省工时，并且只通过 `xiaodai-lite-orchestrator/scripts/secure_record_time_saved.py` 严格校验后记录；完成前禁止展示下一步。
 4. 环节 3、5 不创建独立时间记录。
 5. 需求评审和知识库入库只有用户明确要求时执行。
 6. 首次落盘前确认用户自定义输出目录，不固定盘符。

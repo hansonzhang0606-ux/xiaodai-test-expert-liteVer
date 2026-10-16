@@ -1,7 +1,7 @@
 {
   "name": "xiaodai-testing-expert-lite",
-  "version": "1.0.3",
-  "description": "A lightweight testing expert v1.0.3 for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages, mandatory time-savings tracking, and weknora knowledge-base archiving.",
+  "version": "1.0.4",
+  "description": "A lightweight testing expert v1.0.4 for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages, mandatory time-savings tracking, and weknora knowledge-base archiving. v1.0.4: time records now hard-validate that the user story contains both a PRJ number and a story name (rejected with exit code 4); test case names carry a module prefix; requirement consolidation no longer fabricates clarification items.",
   "author": {
     "name": "Quality Management Team",
     "email": "qa@kingdee.com"
@@ -26,8 +26,8 @@
     "zh": "效贷效融测试专家-轻量版"
   },
   "displayDescription": {
-    "en": "[v1.0.3] Seven on-demand testing stages with XMind, Excel cases, identity verification, time-savings tracking, and weknora knowledge-base archiving.",
-    "zh": "【v1.0.3】轻量七环节按需编排：需求整理、测试点、用例生成、工时追踪与 weknora 归档"
+    "en": "[v1.0.4] Seven on-demand testing stages with XMind, Excel cases, identity verification, time-savings tracking with PRJ-number + story-name validation, and weknora knowledge-base archiving.",
+    "zh": "【v1.0.4】轻量七环节按需编排：需求整理、测试点、用例生成、工时追踪（PRJ 编号+故事名称硬校验）与 weknora 归档"
   },
   "avatar": "avatars/expert.png",
   "categoryId": "10-ProjectQuality",

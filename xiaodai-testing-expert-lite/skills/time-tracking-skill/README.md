@@ -1,4 +1,4 @@
-# 测试人员时间节省追踪 Skill（通用多业务线版 · MySQL-only · v6.2）
+# 测试人员时间节省追踪 Skill（通用多业务线版 · MySQL-only · v6.4）
 
 > 从「效贷测试专家」v1.5.0 抽取而来的独立子 Skill，可嵌入任意测试团队的 Skill 套件。
 > 用于追踪并量化测试工作中 AI 为每位测试人员节省的时间。
@@ -142,7 +142,7 @@ python sync_to_mysql.py --biz-line "智慧记+运营系统"              :: 真�
 
 ```bash
 # 记录节省时间（写本地 JSONL，AI 工作流自动调用）
-python scripts/record_time_saved.py --employee "张三" --user-story "US-001" \
+python scripts/record_time_saved.py --employee "张三" --user-story "PRJ-00884552-修改使用中台数据库账号" \
   --step "文档整理" --step-code "01" --hours 4 \
   --ai-estimated-time-saved-hours 3.5 --biz-line "智慧记+运营系统"
 

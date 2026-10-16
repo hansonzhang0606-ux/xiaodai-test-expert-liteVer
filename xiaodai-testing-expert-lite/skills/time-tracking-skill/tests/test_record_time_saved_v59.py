@@ -23,7 +23,7 @@ class RecordTimeSavedV59Tests(unittest.TestCase):
             records_path = Path(temp_dir) / "records.jsonl"
             kwargs = {
                 "employee": "测试用户",
-                "user_story": "US-001-轻量版测试",
+                "user_story": "PRJ-00884552-轻量版测试",
                 "step": "文档整理",
                 "step_code": "01",
                 "hours": 3.0,
@@ -80,6 +80,26 @@ class RecordTimeSavedV59Tests(unittest.TestCase):
             parameter_names[-2:],
             ["skip_validation", "ai_estimated_time_saved_hours"],
         )
+
+    def test_validation_rejects_partial_user_story(self):
+        # 只给名称 / 只给编号 都应被拒绝（v6.4 用户故事完整性硬校验）
+        for partial in ("【效贷0917】税票报告迭代优化V1.5", "PRJ-00884552"):
+            with self.subTest(partial=partial), self.assertRaises(
+                record_module.UserStoryIncompleteError
+            ):
+                self.record_to_temp_jsonl(user_story=partial)
+
+    def test_validation_requires_prj_prefix(self):
+        # 非 PRJ 前缀的编号不再通过校验（与提示词「形如 PRJ-00884552」一致）
+        with self.assertRaises(record_module.UserStoryIncompleteError):
+            self.record_to_temp_jsonl(user_story="US-001-轻量版测试")
+
+    def test_allow_partial_user_story_bypasses_validation(self):
+        _, saved = self.record_to_temp_jsonl(
+            user_story="PRJ-00884552", allow_partial_user_story=True
+        )
+
+        self.assertEqual(saved["user_story"], "PRJ-00884552")
 
 
 if __name__ == "__main__":

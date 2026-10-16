@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Strict identity gate for time-tracking-skill v6.3 records.
+"""Strict identity gate for time-tracking-skill v6.4 records.
 
 This wrapper preserves the original time-tracking Skill unchanged. It fails closed
 when the MySQL roster is unavailable, requires an exact active employee match for
@@ -16,6 +16,7 @@ v6.3: 写盘前强制检查「编号更小」的追踪环节是否已记录（�
   0  成功
   2  被前序环节缺失拦截（需先补录或明确跳过）
   3  身份验证失败
+  4  用户故事不完整（PRJ 编号或故事名称缺失，需补齐后重试；由 record_time_saved.py 透传）
 """
 
 from __future__ import annotations
@@ -190,10 +191,10 @@ def check_prior_missing(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
-        description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.3）"
+        description="通过 MySQL 花名册严格校验后记录节省工时（v1.0.4）"
     )
     parser.add_argument("--employee", required=True, help="员工姓名，精确匹配")
-    parser.add_argument("--user-story", required=True, help="用户故事名称或编号")
+    parser.add_argument("--user-story", required=True, help="完整用户故事：<PRJ 编号>-<故事名称>（编号与名称缺一不可）")
     parser.add_argument("--step", required=True, help="步骤名称")
     parser.add_argument("--step-code", required=True, choices=SUPPORTED_STEP_CODES)
     parser.add_argument("--biz-line", required=True, choices=SUPPORTED_BUSINESS_LINES)

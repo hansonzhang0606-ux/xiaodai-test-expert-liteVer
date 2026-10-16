@@ -104,7 +104,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="核查时间记录是否已同步到 MySQL v6.1")
     parser.add_argument("--biz-line", required=True, help="业务线名称")
     parser.add_argument("--employee", required=True, help="员工姓名")
-    parser.add_argument("--user-story", required=True, help="用户故事名称或编号")
+    parser.add_argument("--user-story", required=True, help="完整用户故事：<PRJ 编号>-<故事名称>（编号与名称缺一不可）")
     parser.add_argument(
         "--steps",
         default="",

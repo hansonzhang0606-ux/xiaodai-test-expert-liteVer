@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-时间节省记录脚本 v6.3（通用多业务线版）
+时间节省记录脚本 v6.4（通用多业务线版）
 在工作流每个步骤完成后，记录该步骤为人类员工节省了多少时间。
+
+v6.4 增量:
+  - 用户故事完整性硬校验：--user-story 必须同时包含 <PRJ 编号> 与 <故事名称>，缺失任一部分即拒绝记录
+    （退出码 4）；排障/历史补录可用 --allow-partial-user-story 放行
+  - 校验用编号正则收紧为 PRJ- 前缀（与提示词「形如 PRJ-00884552」一致）
 
 v5.9 增量:
   - 新增 ai_estimated_time_saved_hours，可选且独立于人员反馈
@@ -18,7 +23,7 @@ v3 改进:
 用法:
   python record_time_saved.py \
     --employee "张三" \
-    --user-story "US-001-贷款审批流程优化" \
+    --user-story "PRJ-00884552-贷款审批流程优化" \
     --step "文档整理" \
     --step-code "01" \
     --hours 4.0 \
@@ -31,7 +36,7 @@ v3 改进:
   # 也可以用人天为单位输入，脚本自动换算为小时存储
   python record_time_saved.py \
     --employee "李四" \
-    --user-story "US-001" \
+    --user-story "PRJ-00884552-修改使用中台数据库账号" \
     --step "用例细化" \
     --step-code "06" \
     --person-days 1.5 \
@@ -75,6 +80,9 @@ HOURS_PER_PD = 8.0
 # 故事编号提取正则：匹配 PRJ-00769736 / US-001 / P-12345 等「前缀-数字」格式
 STORY_CODE_RE = re.compile(r"([A-Za-z]{1,8}-\d{3,})")
 
+# 完整性校验专用编号正则：必须为 PRJ- 前缀（与提示词「形如 PRJ-00884552」保持一致）
+VALIDATION_CODE_RE = re.compile(r"(PRJ-\d{3,})", re.IGNORECASE)
+
 
 def extract_user_story_code(user_story: str) -> str:
     """从用户故事标题中提取编号（如 'PRJ-00769736-【效贷xxxx】OCR征信报告测额' → 'PRJ-00769736'）"""
@@ -109,7 +117,7 @@ def split_user_story(user_story):
     us = (user_story or "").strip()
     if not us:
         return "", ""
-    m = STORY_CODE_RE.search(us)
+    m = VALIDATION_CODE_RE.search(us)
     if m:
         code = m.group(1)
         rest = us[: m.start()] + " " + us[m.end():]
@@ -146,6 +154,8 @@ def user_story_reminder(user_story):
         f"   工时入库需要「PRJ 编号 + 故事名称」两部分，缺一不可。\n"
         f"   请补充「{missing}」后重新记录，例如：{USER_STORY_FORMAT_EXAMPLE}"
     )
+
+
 def normalize_ai_estimated_hours(value):
     """校验并规范化 AI 预估节省工时（小时）。"""
     if value is None:
@@ -447,7 +457,7 @@ def main():
                 "但不建议：会造成工时无法按故事汇总）。",
                 file=sys.stderr,
             )
-            sys.exit(2)
+            sys.exit(4)
 
     record(
         employee=args.employee,

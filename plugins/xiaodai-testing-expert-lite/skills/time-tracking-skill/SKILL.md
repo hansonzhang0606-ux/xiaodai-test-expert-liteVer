@@ -7,7 +7,7 @@ description: >-
 
 # 测试人员时间节省追踪 Skill
 
-> 当前发布版本：**v6.2**
+> 当前发布版本：**v6.4**
 
 > 从「效贷测试专家」抽取而来的独立子 Skill，用于嵌入其他测试团队的 Skill 套件。
 > 核心能力：**追踪并量化测试工作中 AI 为每位测试人员节省的时间**。
@@ -31,7 +31,7 @@ description: >-
 
 ```
 time-tracking-skill/
-├── VERSION                           # 当前发布版本：6.2
+├── VERSION                           # 当前发布版本：6.4
 ├── SKILL.md                          # 本文件
 ├── README.md                         # 使用与部署说明
 ├── prompts/

@@ -167,7 +167,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="检查跨步骤缺失的时间节省记录 v6.0")
     parser.add_argument("--biz-line", required=True, help="业务线名称（如 效贷/效融/小贷）")
     parser.add_argument("--employee", required=True, help="员工姓名")
-    parser.add_argument("--user-story", required=True, help="用户故事名称或编号")
+    parser.add_argument("--user-story", required=True, help="完整用户故事：<PRJ 编号>-<故事名称>（编号与名称缺一不可）")
     parser.add_argument(
         "--current-step-code",
         default="",

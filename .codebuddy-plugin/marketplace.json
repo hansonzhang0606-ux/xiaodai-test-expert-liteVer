@@ -5,7 +5,8 @@
     {
       "name": "xiaodai-testing-expert-lite",
       "source": "./plugins/xiaodai-testing-expert-lite",
-      "description": "Lightweight seven-stage testing expert for Xiaodai, Xiaorong, and Microloan business lines, with xmind-to-weknora knowledge-base archiving (v1.0.3)."
+      "description": "A lightweight testing expert v1.0.4 for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages, mandatory time-savings tracking, and weknora knowledge-base archiving. v1.0.4: time records now hard-validate that the user story contains both a PRJ number and a story name (rejected with exit code 4); test case names carry a module prefix; requirement consolidation no longer fabricates clarification items.",
+      "version": "1.0.4"
     }
   ]
 }

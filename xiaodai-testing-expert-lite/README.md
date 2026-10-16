@@ -1,5 +1,7 @@
 # 效贷测试专家轻量版 WorkBuddy 专家包
 
-版本 v1.0.3。包含轻量业务 Skill、时间追踪 Skill v6.3、七环节编排 Skill，以及 xmind-to-weknora 知识库归档 Skill（终版 xmind 用例自动转 Markdown 并归档到团队 weknora 知识库，映射内置，测试人员只需配 MCP 连接器）。
+版本 v1.0.4。包含轻量业务 Skill、时间追踪 Skill v6.4、七环节编排 Skill，以及 xmind-to-weknora 知识库归档 Skill（终版 xmind 用例自动转 Markdown 并归档到团队 weknora 知识库，映射内置，测试人员只需配 MCP 连接器）。
+
+> **v1.0.4 增量**：① 时间记录新增「用户故事完整性硬校验」——`--user-story` 必须同时含 `<PRJ 编号>` 与 `<故事名称>`，缺一即拒绝入库（退出码 4）；② 用例名称强制加模块前缀 `【模块简称】+原始测试点名称`（便于 DMP 按模块检索）；③ 需求整理禁止编造待确认点；④ 修复 `refine_testcases.py` 跨项目（效贷/效融）取错配置根因。
 
 该目录由仓库构建脚本维护。`skills/` 内容来自仓库根目录权威源码，请勿在本目录单独修改。

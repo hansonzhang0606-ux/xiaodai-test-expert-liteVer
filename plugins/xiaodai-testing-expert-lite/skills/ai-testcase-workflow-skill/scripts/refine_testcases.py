@@ -16,7 +16,7 @@ from datetime import datetime
 
 # 导入配置加载器
 try:
-    from config_loader import get_config
+    from config_loader import get_config, detect_project_root
 except ImportError as e:
     print(f"❌ config_loader 导入失败: {e}")
     print("   请确保 scripts/ 目录完整，且 config_loader.py 存在")
@@ -381,7 +381,7 @@ def refine_testcases_file(input_path, output_path, **kwargs):
     with open(input_path, 'r', encoding='utf-8-sig') as f:
         parsed_data = json.load(f)
 
-    config = get_config()
+    config = get_config(project_root=detect_project_root(input_path))
     defaults = config.get_defaults()
     user_config = {
         'team': kwargs.get('team') or defaults.get('team', ''),
@@ -491,7 +491,8 @@ def main():
     testpoints = parsed_data.get('testpoints', [])
 
     # 获取配置
-    config = get_config()
+    project_root = detect_project_root(args.input)
+    config = get_config(project_root=project_root)
     defaults = config.get_defaults()
 
     # 用户配置（优先使用参数，其次使用配置文件）
