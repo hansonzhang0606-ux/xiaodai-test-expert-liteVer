@@ -1,7 +1,7 @@
 {
   "name": "xiaodai-testing-expert-lite",
-  "version": "1.0.2",
-  "description": "A lightweight testing expert for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages and mandatory time-savings tracking.",
+  "version": "1.0.3",
+  "description": "A lightweight testing expert v1.0.3 for Xiaodai, Xiaorong, and Microloan business lines with seven on-demand stages, mandatory time-savings tracking, and weknora knowledge-base archiving.",
   "author": {
     "name": "Quality Management Team",
     "email": "qa@kingdee.com"
@@ -12,7 +12,8 @@
   "skills": [
     "./skills/xiaodai-lite-orchestrator",
     "./skills/ai-testcase-workflow-skill",
-    "./skills/time-tracking-skill"
+    "./skills/time-tracking-skill",
+    "./skills/xmind-to-weknora"
   ],
   "expertType": "agent",
   "agentName": "xiaodai-testing-expert-lite",
@@ -21,12 +22,12 @@
     "zh": "效贷效融测试专家【Lite版】"
   },
   "profession": {
-    "en": "Lightweight Functional Testing Expert",
-    "zh": "轻量功能测试专家"
+    "en": "Xiaodai & Xiaorong Testing Expert - Lite",
+    "zh": "效贷效融测试专家-轻量版"
   },
   "displayDescription": {
-    "en": "[v1.0.2] Seven on-demand testing stages with XMind, Excel cases, identity verification, and time-savings tracking.",
-    "zh": "【v1.0.2】轻量七环节按需编排，覆盖需求整理、测试点、用例生成及节省工时追踪"
+    "en": "[v1.0.3] Seven on-demand testing stages with XMind, Excel cases, identity verification, time-savings tracking, and weknora knowledge-base archiving.",
+    "zh": "【v1.0.3】轻量七环节按需编排：需求整理、测试点、用例生成、工时追踪与 weknora 归档"
   },
   "avatar": "avatars/expert.png",
   "categoryId": "10-ProjectQuality",

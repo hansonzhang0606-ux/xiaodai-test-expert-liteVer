@@ -1,0 +1,198 @@
+{
+  "version": "2.4",
+  "_README": "团队标准预设映射（随 skill 分发，测试人员无需修改）。空间身份以 weknora 空间ID + 空间名称 为准；MCP 服务器名由各人在连接器中自定义，脚本按 mcp_url 自动识别（init_config.py --discover），切勿把服务器名当作固定值。授权令牌不在本文件内，须由各人在连接器中配置（Authorization: Bearer mcp_xxx）。",
+  "_source": "weknora 空间ID / 空间名称 / 业务线 / 知识库 / 知识库ID / 对应测试专家 为团队标准映射表，2026-10-15 确认。",
+  "owner": "",
+  "spaces": {
+    "10004": {
+      "space_id": "10004",
+      "space_name": "场景业务线",
+      "mcp_url": "https://finwiki.kingdee.com/mcp/d8ce6877-390f-4e56-9e8e-4310bf76821d",
+      "mcp_endpoint_uuid": "d8ce6877-390f-4e56-9e8e-4310bf76821d",
+      "mcp_server_hint": "weknora-changjingyewu",
+      "mcp_server": "",
+      "mcp_prefix": "",
+      "knowledge_bases": [
+        {
+          "id": "6603ca32-0432-424e-8972-628377d4bfe0",
+          "name": "效贷_测试_测试用例",
+          "biz_line": "XD",
+          "biz_line_name": "效贷",
+          "biz_line_alias": ["效贷", "XD", "金蝶效贷"],
+          "product": "效贷",
+          "product_alias": ["金蝶效贷", "效贷"],
+          "doc_type": "测试用例",
+          "expert": "效贷效融测试专家-轻量版"
+        },
+        {
+          "id": "9c5ca48b-3c4c-442a-8b1a-bbfada555eca",
+          "name": "效融_测试_测试用例",
+          "biz_line": "XR",
+          "biz_line_name": "效融",
+          "biz_line_alias": ["效融", "XR", "金蝶效融"],
+          "product": "效融",
+          "product_alias": ["金蝶效融", "效融"],
+          "doc_type": "测试用例",
+          "expert": "效贷效融测试专家-轻量版"
+        },
+        {
+          "id": "f49f73fa-46c1-4d5a-9c3f-41a2343ee3b5",
+          "name": "效贷_测试_测试总结",
+          "biz_line": "XD",
+          "biz_line_name": "效贷",
+          "biz_line_alias": ["效贷", "XD", "金蝶效贷"],
+          "product": "效贷",
+          "product_alias": ["金蝶效贷", "效贷"],
+          "doc_type": "测试总结",
+          "expert": "效贷效融测试专家-轻量版"
+        },
+        {
+          "id": "e4af9e3a-6a6b-4ca6-b7c4-2cdf1cfea8c3",
+          "name": "效融_测试_测试总结",
+          "biz_line": "XR",
+          "biz_line_name": "效融",
+          "biz_line_alias": ["效融", "XR", "金蝶效融"],
+          "product": "效融",
+          "product_alias": ["金蝶效融", "效融"],
+          "doc_type": "测试总结",
+          "expert": "效贷效融测试专家-轻量版"
+        }
+      ]
+    },
+    "10003": {
+      "space_id": "10003",
+      "space_name": "数据业务线",
+      "mcp_url": "https://finwiki.kingdee.com/mcp/ab150dd0-2b14-4775-9622-0c9c95b9a84e",
+      "mcp_endpoint_uuid": "ab150dd0-2b14-4775-9622-0c9c95b9a84e",
+      "mcp_server_hint": "weknora-shujuyewu",
+      "mcp_server": "",
+      "mcp_prefix": "",
+      "knowledge_bases": [
+        {
+          "id": "4b61aa94-2478-49e2-84c9-4847b309871c",
+          "name": "泾渭云_测试_测试用例",
+          "biz_line": "JWY",
+          "biz_line_name": "泾渭云",
+          "biz_line_alias": ["泾渭云", "JWY", "金蝶征信", "征信"],
+          "product": "泾渭云",
+          "product_alias": ["金蝶征信", "泾渭云"],
+          "doc_type": "测试用例",
+          "expert": "泾渭云测试专家"
+        },
+        {
+          "id": "dce548fd-ac44-4fdd-b2b4-deb24056605b",
+          "name": "小贷_测试_测试用例",
+          "biz_line": "XDK",
+          "biz_line_name": "小贷",
+          "biz_line_alias": ["小贷", "XDK", "金蝶小贷"],
+          "product": "小贷",
+          "product_alias": ["金蝶小贷", "小贷"],
+          "doc_type": "测试用例",
+          "expert": "效贷效融测试专家-轻量版"
+        }
+      ]
+    },
+    "10006": {
+      "space_id": "10006",
+      "space_name": "智慧记",
+      "mcp_url": "https://finwiki.kingdee.com/mcp/fc8b14ee-4e7a-492b-8610-eb9abc17ae70",
+      "mcp_endpoint_uuid": "fc8b14ee-4e7a-492b-8610-eb9abc17ae70",
+      "mcp_server_hint": "weknora-zhihuiji",
+      "mcp_server": "",
+      "mcp_prefix": "",
+      "knowledge_bases": [
+        {
+          "id": "5e13077c-225c-4777-b644-528ec4b251e0",
+          "name": "AI零售_测试_测试用例",
+          "biz_line": "ZHJLS",
+          "biz_line_name": "智慧记零售",
+          "biz_line_alias": ["智慧记零售", "零售", "AI零售", "ZHJLS"],
+          "product": "智慧记零售",
+          "product_alias": ["AI零售", "智慧记零售"],
+          "doc_type": "测试用例",
+          "expert": "智慧记测试专家-轻量版"
+        },
+        {
+          "id": "97dbc25a-70d2-4ff9-8255-0f6982143fe6",
+          "name": "AI进销存_测试_测试用例",
+          "biz_line": "AIJXC",
+          "biz_line_name": "智慧记星火",
+          "biz_line_alias": ["智慧记星火", "星火", "AI进销存", "进销存", "AIJXC"],
+          "product": "AI进销存",
+          "product_alias": ["AI进销存", "星火", "智慧记星火"],
+          "doc_type": "测试用例",
+          "expert": "智慧记AI进销存测试专家-轻量版"
+        }
+      ]
+    }
+  },
+  "naming": {
+    "title_template": "{product}_{user_story}_{requirement}_测试用例_{yyyyMMdd}",
+    "title_template_summary": "{product}_{user_story}_{requirement}_测试总结_{yyyyMMdd}",
+    "title_template_generic": "{product}_{user_story}_{requirement}_{doc_type}_{yyyyMMdd}",
+    "dedupe": "by_title",
+    "max_title_len": 80
+  },
+  "tags": {
+    "enabled": true,
+    "auto_assign": false,
+    "channel": "manual",
+    "channel_reason": "weknora MCP 服务端（tools/list 实测）仅注册 10 个工具：add_document / update_document / list_documents / read_document / list_knowledge_bases / search_knowledge / grep_chunks / wiki_index / wiki_read_page / wiki_search，均无标签参数；add_document 的 inputSchema 只有 knowledge_base_id / title / content / url / publish，且 additionalProperties=false。list_documents 返回字段也不含标签，因此标签无法自动写入、也无法自动回读校验。",
+    "decision": "方案 C（现状兜底）：文档类型由 skill 自动判定并写入 MD 头部与文档标题，标签由测试人员在 weknora 网页端人工勾选；skill 全程提醒、记录、追踪，确保不漏标。",
+    "standard_tags": ["测试用例", "测试总结", "测试需求分析", "测试缺陷"],
+    "manual_steps": [
+      "打开 weknora 对应知识库页（空间名称见本表，知识库名逐字核对）",
+      "勾选本次上传的文档（可按标题日期戳批量勾选）",
+      "点顶部「标签」按钮",
+      "添加标签 -> 选择本次文档类型对应的标签（名称必须与 standard_tags 一致）",
+      "确定；回到列表确认标签已显示"
+    ],
+    "manual_steps_short": "知识库页 → 勾选文档 → 标签 → 添加标签 → 选择「<标签名>」→ 确定",
+    "kb_tag_init": {
+      "_note": "标签是「知识库级」的，每个知识库各有一套。首次使用前，请管理员/测试人员在这 8 个测试知识库中各建好 4 个标准标签；已建好的库可跳过。",
+      "required_tags": ["测试用例", "测试总结", "测试需求分析", "测试缺陷"],
+      "spaces": {
+        "10004": ["效贷_测试_测试用例", "效融_测试_测试用例", "效贷_测试_测试总结", "效融_测试_测试总结"],
+        "10003": ["泾渭云_测试_测试用例", "小贷_测试_测试用例"],
+        "10006": ["AI零售_测试_测试用例", "AI进销存_测试_测试用例"]
+      },
+      "verify": "打开任一知识库 → 点「标签」→ 应能看到 4 个标准标签；缺哪个补哪个，名称逐字一致（含中文，无空格）。"
+    },
+    "map": {
+      "测试用例": "测试用例",
+      "测试总结": "测试总结",
+      "测试需求分析": "测试需求分析",
+      "测试缺陷": "测试缺陷"
+    },
+    "fallback_same_as_doc_type": true,
+    "ui_hint": "weknora 知识库页 -> 勾选文档 -> 点「标签」-> 添加标签 -> 选择对应文档类型标签 -> 确定",
+    "upgrade_paths": {
+      "A_mcp_param": "请 weknora / MCP 维护方为 add_document 增加 tags 参数或新增 set_document_tags 工具；完成后把 auto_assign 改为 true、channel 改为 mcp，skill 流程无需改动即可自动打标。",
+      "B_rest": "scripts/tag_documents.py 已实现 REST 直连（默认 dry-run，须显式 --apply），但需要用户登录态令牌或管理员 API Key（/api/v1/system/admin/api-keys）；MCP 令牌对 /api/* 一律 401（已实测）。拿到可用令牌后设 WEKNORA_TOKEN 即可启用。",
+      "rest_available": {
+        "create_kb_tag": "POST /api/v1/knowledge-bases/{kb}/tags",
+        "list_kb_tags": "GET /api/v1/knowledge-bases/{kb}/tags",
+        "rename_kb_tag": "PUT /api/v1/knowledge-bases/{kb}/tags/{tagId}",
+        "delete_kb_tag": "DELETE /api/v1/knowledge-bases/{kb}/tags/{tagId}?force=true",
+        "assign_doc_tags": "PUT /api/v1/knowledge/tags"
+      }
+    }
+  },
+  "upload": {
+    "publish": true,
+    "require_confirm": true,
+    "confirm_before_every_upload": true,
+    "confirm_fields": ["业务线", "空间", "知识库", "文档类型", "weknora 标签", "文档标题", "来源文件"],
+    "diff_check_before_first_upload": true,
+    "allow_unregistered_kb": false,
+    "keep_local_md": true,
+    "tag_remind_after_upload": true,
+    "tag_remind_at_step_end": true
+  },
+  "reminder": {
+    "ask_after_xmind_generated": true,
+    "check_at_each_step_end": true,
+    "blocking": false,
+    "remind_untagged": true
+  }
+}

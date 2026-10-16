@@ -1,11 +1,11 @@
 {
   "name": "xiaodai-test-expert-lite-marketplace",
-  "description": "效贷测试专家轻量版私有市场，提供三业务线七环节按需测试流程和节省工时追踪。",
+  "description": "效贷测试专家轻量版私有市场，提供三业务线七环节按需测试流程、节省工时追踪，并支持 xmind 终版用例自动归档至 weknora 知识库。",
   "plugins": [
     {
       "name": "xiaodai-testing-expert-lite",
       "source": "./plugins/xiaodai-testing-expert-lite",
-      "description": "Lightweight seven-stage testing expert for Xiaodai, Xiaorong, and Microloan business lines."
+      "description": "Lightweight seven-stage testing expert for Xiaodai, Xiaorong, and Microloan business lines, with xmind-to-weknora knowledge-base archiving (v1.0.3)."
     }
   ]
 }
